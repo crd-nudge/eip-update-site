@@ -3,7 +3,6 @@
 // (Self-contained — no imports from other files.)
 
 const EXEC_URL = process.env.APPS_SCRIPT_EXEC_URL || '';
-
 async function callAppsScript(fn, args) {
   if (!EXEC_URL) {
     throw new Error('APPS_SCRIPT_EXEC_URL env var is not set — see DEPLOYMENT_INSTRUCTIONS_VERCEL.md.');
