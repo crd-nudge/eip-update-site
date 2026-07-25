@@ -1,0 +1,9 @@
+{
+  "name": "eip-update-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EIP Stakeholder Update — live page with comments, served from Vercel to avoid firewall issues with script.google.com. The /api functions proxy server-to-server to the existing Apps Script deployment, which still owns the Sheet and email notifications — no Google Cloud service account or separate email service needed.",
+  "engines": {
+    "node": ">=18"
+  }
+}
