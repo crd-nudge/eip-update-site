@@ -423,6 +423,10 @@
     color: var(--ink); background: var(--cream); margin-bottom: 10px;
   }
   .modal-box textarea { resize: vertical; }
+
+  @media print {
+    .comments-block, .modal-overlay { display: none !important; }
+  }
 </style>
 </head>
 <body>
