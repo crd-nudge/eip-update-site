@@ -128,16 +128,22 @@
     border-collapse: collapse;
     background: #fff;
     border-radius: 10px;
-    overflow: hidden;
     font-size: 13px;
   }
-  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+  .table-wrap {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 560px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
   th, td {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border);
     white-space: nowrap;
   }
+  thead th { position: sticky; top: 0; z-index: 2; box-shadow: 0 1px 0 var(--border); }
   th {
     background: var(--cream-2);
     color: var(--brown-dark);
@@ -334,7 +340,8 @@
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .panel { display: block !important; page-break-after: always; break-after: page; }
     .panel:last-child { page-break-after: auto; break-after: auto; }
-    .table-wrap { overflow: visible; border: none; }
+    .table-wrap { overflow: visible; border: none; max-height: none; }
+    thead th { position: static; box-shadow: none; }
     table { font-size: 10.5px; }
     th, td { white-space: normal; padding: 3px 5px; }
     #progressTable { font-size: 9px; }
