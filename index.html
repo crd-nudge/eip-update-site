@@ -218,6 +218,7 @@
   .eco-block ul { margin: 0; padding-left: 20px; }
   .eco-block li { font-size: 14px; color: #3a2e24; margin-bottom: 6px; }
   .filter-bar { margin-bottom: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .filter-bar:empty { display: none; }
   .filter-bar select {
     padding: 8px 14px;
     border-radius: 20px;
@@ -461,6 +462,23 @@
   @media print {
     .comments-block, .modal-overlay { display: none !important; }
   }
+
+  .refresh-btn {
+    background: none;
+    border: 1px solid var(--brown);
+    color: var(--brown-dark);
+    border-radius: 14px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .refresh-btn:hover { background: var(--cream-2); }
+  .refresh-btn:disabled { opacity: 0.6; cursor: default; }
+  .refresh-status { font-size: 12px; color: #776254; }
+  .refresh-status.is-error { color: #b8452a; }
 </style>
 </head>
 <body>
@@ -492,7 +510,7 @@
   <section id="progress" class="panel active">
     
     <h2 class="section-title">Ongoing Government Partnership Projects</h2>
-    <div class="filter-bar">
+    <div class="filter-bar" id="progressFilterBar"><button type="button" class="refresh-btn" data-panel="progress">&#8635; Refresh Progress data</button><span class="refresh-status" data-panel="progress"></span>
       <select id="fundingFilter"><option value="all">All funding sources</option><option value="nrlm-and-state-srlm">NRLM and State SRLM</option><option value="state-srlm">State SRLM</option></select>
       <select id="progPtypeFilter"><option value="all">All project types</option><option value="nrlm---ilp">NRLM - ILP</option><option value="nrlm---say">NRLM - SAY</option><option value="state-project">State Project</option></select>
       <select id="itypeFilter"><option value="all">All intervention types</option><option value="grant">Grant</option><option value="low-interest-loan">Low-Interest Loan</option><option value="returnable-grant">Returnable Grant</option></select>
@@ -509,7 +527,7 @@
         <th>Sl No.</th><th class="proj-name">Project</th><th class="coltl">Timeline</th><th class="wrap">Approved Budget (₹)</th><th class="wrap">Approved Budget ($)</th>
         <th>HHs in Plan</th><th>Active HHs</th><th>HHs Inactive</th><th class="wrap colfin">Fin. Support Reaching HHs</th>
       </tr></thead>
-      <tbody>
+      <tbody id="progressTbody">
     <tr data-funding="nrlm-and-state-srlm" data-ptype="nrlm---ilp" data-itype="grant">
       <td class="num">1</td>
       <td class="proj-name">Jharkhand (UPAJ)
@@ -740,7 +758,8 @@
   <section id="deals" class="panel">
     
     <h2 class="section-title">New Govt. Partnerships</h2>
-    
+    <div class="filter-bar" id="dealsFilterBar"><button type="button" class="refresh-btn" data-panel="deals">&#8635; Refresh Deals data</button><span class="refresh-status" data-panel="deals"></span></div>
+    <div id="dealsCardsContainer">
     <div class="deal-card">
       <div class="deal-head">
         <h3>D-SAG</h3>
@@ -890,7 +909,7 @@
               <div class="flow-label">MoU Signed</div>
             </div></div>
       <p class="deal-remarks"><strong>Update:</strong> Letter of initiation received from Jharkhand State Livelihood Promotion Society for an interest-free loan plus social security pension model. The state has suggested starting with 5,000 households as a pilot, expected to be cleared by the JSLPS CEO by end of September.</p>
-    </div>
+    </div></div>
     <p class="section-note" style="margin-top:8px;">USD figures are approximate, converted at ₹90 = $1 (same rate as the Project Progress page).</p>
     <div class="acro-note"><strong>BRLF</strong> — Bharat Rural Livelihood Foundation&nbsp;&nbsp;·&nbsp;&nbsp;<strong>D-SAG</strong> — Development Support Agency of Gujarat, Tribal Department&nbsp;&nbsp;·&nbsp;&nbsp;<strong>HH / HHs</strong> — Household / Households&nbsp;&nbsp;·&nbsp;&nbsp;<strong>JSLPS</strong> — Jharkhand State Livelihood Promotion Society&nbsp;&nbsp;·&nbsp;&nbsp;<strong>MoRD</strong> — Ministry of Rural Development, Govt. of India&nbsp;&nbsp;·&nbsp;&nbsp;<strong>MoSJE</strong> — Ministry of Social Justice and Empowerment, Govt. of India&nbsp;&nbsp;·&nbsp;&nbsp;<strong>MoU</strong> — Memorandum of Understanding&nbsp;&nbsp;·&nbsp;&nbsp;<strong>SAY</strong> — Samaveshi Ajeevika Yojana</div>
   <div class="comments-block" data-section="deals">
@@ -914,7 +933,7 @@
     
     <h2 class="section-title">Research &amp; Evaluation</h2>
     <p class="section-note">Studies in concept, in execution, and Livelihood Research across the programme. "Latest Update" reflects the source tracker's most recent monthly progress note.</p>
-    <div class="filter-bar">
+    <div class="filter-bar" id="researchFilterBar"><button type="button" class="refresh-btn" data-panel="research">&#8635; Refresh Research data</button><span class="refresh-status" data-panel="research"></span>
       <select id="rePtypeFilter"><option value="all">All project types</option><option value="direct-implementation">Direct Implementation</option><option value="govt-implementation---ilp">Govt. Implementation - ILP</option><option value="govt-implementation---say">Govt. Implementation - SAY</option><option value="state-funded-implementation">State Funded Implementation</option></select>
       <select id="reStypeFilter"><option value="all">All study types</option><option value="impact-evaluation">Impact evaluation</option><option value="livelihood-research">Livelihood Research</option><option value="outcome-plus-process-evaluation">Outcome + Process evaluation</option><option value="outcome-evaluation">Outcome evaluation</option><option value="process-evaluation">Process evaluation</option><option value="randomised-control-trial">Randomised Control Trial</option><option value="sroi">SROI</option><option value="sustainability-study">Sustainability Study</option></select>
       <select id="reExecFilter"><option value="all">All execution statuses</option><option value="completed">Completed</option><option value="in-progress">In Progress</option><option value="ongoing">Ongoing</option><option value="yet-to-start">Yet To Start</option></select>
@@ -926,7 +945,7 @@
         <th>S. No.</th><th class="proj-name wrap">Study Title</th><th>Project Type</th><th>Type of Study</th>
         <th class="wrap-sm">Partner</th><th>Execution</th><th>Report</th>
       </tr></thead>
-      <tbody>
+      <tbody id="researchTbody">
     <tr data-ptype="state-funded-implementation" data-stype="randomised-control-trial" data-exec="yet-to-start">
       <td class="num">1</td>
       <td class="proj-name wrap">RCT of JMMSY scheme
@@ -1292,7 +1311,7 @@
   <section id="ecosystem" class="panel">
     
     <h2 class="section-title">Partnerships</h2>
-    <div class="filter-bar">
+    <div class="filter-bar" id="partnershipsFilterBar"><button type="button" class="refresh-btn" data-panel="ecosystem">&#8635; Refresh Ecosystem data</button><span class="refresh-status" data-panel="ecosystem"></span>
       <select id="partnerTypeFilter"><option value="all">All partnership types</option><option value="non-financial">Non-Financial</option></select>
       <select id="partnerStatusFilter"><option value="all">All statuses</option><option value="active">Active</option></select>
       <span class="filter-count" id="partnershipsCount"></span>
@@ -1302,7 +1321,7 @@
       <thead><tr>
         <th>Sl.</th><th>Partner Name</th><th>Project</th><th>Partnership Type</th><th class="wrap">Partnership Focus</th><th>Partnership Status</th>
       </tr></thead>
-      <tbody>
+      <tbody id="partnershipsTbody">
     <tr data-ptype="non-financial" data-status="active">
       <td class="num">1</td>
       <td>PRADAN</td>
@@ -1340,7 +1359,7 @@
     </div>
 
     <h2 class="section-title" style="margin-top:32px;">Ecosystem / Convenings</h2>
-    <div class="filter-bar">
+    <div class="filter-bar" id="conveningsFilterBar">
       <select id="conveningMonthFilter"><option value="all">All months</option><option value="aug-2026">Aug 2026</option><option value="jul-2026">Jul 2026</option><option value="oct-2026">Oct 2026</option><option value="sep-2026">Sep 2026</option></select>
       <select id="conveningStatusFilter"><option value="all">All statuses</option><option value="concluded">Concluded</option><option value="planned">Planned</option></select>
       <span class="filter-count" id="conveningsCount"></span>
@@ -1350,7 +1369,7 @@
       <thead><tr>
         <th>Sl.</th><th>Month</th><th>Location</th><th class="wrap">Topic</th><th class="wrap">Attendees</th><th>Status</th>
       </tr></thead>
-      <tbody>
+      <tbody id="conveningsTbody">
     <tr data-month="jul-2026" data-status="concluded">
       <td class="num">1</td>
       <td class="center">Jul 2026</td>
@@ -2216,6 +2235,218 @@
         return;
       }
     });
+  });
+
+  /* ===================================================================
+   * "Refresh Data" — Progress / Deals / Research / Ecosystem panels pull
+   * straight from the tracker + Research sheets on click, via
+   * /api/get-report-data (which proxies server-to-server to the Apps
+   * Script exec URL). Photos are intentionally NOT part of this (kept on
+   * the manual monthly process — refreshing photos live would mean
+   * re-fetching/re-encoding 60+ images on every click, which is slow and
+   * heavy).
+   *
+   * Mirrors the exact row markup build_page.py generates server-side, so
+   * the existing wireFilters()/recomputeProgressTotals() keep working
+   * unchanged against the freshly-rendered rows.
+   * =================================================================== */
+
+  function slugJs(s) {
+    return String(s).toLowerCase().replace(/ /g, '-').replace(/&/g, 'and')
+      .replace(/\//g, '-').replace(/,/g, '').replace(/\+/g, 'plus')
+      .replace(/'/g, '').replace(/\./g, '');
+  }
+
+  function fmtInt(n) { return Math.round(Number(n) || 0).toLocaleString('en-US'); }
+
+  function fmtDec(n, decimals) {
+    return Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: decimals });
+  }
+
+  function distinctSorted(arr) {
+    return Array.from(new Set(arr.filter(function (v) { return v; }))).sort();
+  }
+
+  function rebuildSelectOptions(selectId, values, allLabel) {
+    var sel = document.getElementById(selectId);
+    if (!sel) return;
+    var prevValue = sel.value;
+    sel.innerHTML = '<option value="all">' + escapeHtml(allLabel) + '</option>' +
+      values.map(function (v) { return '<option value="' + slugJs(v) + '">' + escapeHtml(v) + '</option>'; }).join('');
+    var stillValid = Array.prototype.some.call(sel.options, function (o) { return o.value === prevValue; });
+    sel.value = stillValid ? prevValue : 'all';
+  }
+
+  function renderProgressData(data) {
+    var rows = data.rows || [];
+    var rowsHtml = rows.map(function (p, i) {
+      return '<tr data-funding="' + slugJs(p.fundingSource) + '" data-ptype="' + slugJs(p.projectType) + '" data-itype="' + slugJs(p.interventionType) + '">' +
+        '<td class="num">' + (i + 1) + '</td>' +
+        '<td class="proj-name">' + escapeHtml(p.name) +
+          '<div class="proj-tags">' + escapeHtml(p.fundingSource) + ' &middot; ' + escapeHtml(p.projectType) + ' &middot; ' + escapeHtml(p.interventionType) + '</div>' +
+        '</td>' +
+        '<td class="coltl">' + escapeHtml(p.timeline) + '</td>' +
+        '<td class="num wrap" data-num="' + p.budgetCr + '">₹' + fmtDec(p.budgetCr, 2) + ' Cr</td>' +
+        '<td class="num wrap" data-num="' + p.budgetUsdMn + '">$' + fmtDec(p.budgetUsdMn, 1) + 'M</td>' +
+        '<td class="num" data-num="' + p.plan + '">' + fmtInt(p.plan) + '</td>' +
+        '<td class="num" data-num="' + p.active + '">' + fmtInt(p.active) + '</td>' +
+        '<td class="num" data-num="' + p.inactive + '">' + fmtInt(p.inactive) + '</td>' +
+        '<td class="num wrap colfin" data-num="' + p.fin + '">' + fmtInt(p.fin) + '</td>' +
+      '</tr>';
+    }).join('');
+    var sum = function (key) { return rows.reduce(function (s, r) { return s + (Number(r[key]) || 0); }, 0); };
+    var totalHtml = '<tr class="total-row" id="progressTotalRow">' +
+      '<td></td><td>Total</td><td></td>' +
+      '<td class="num wrap" id="totBudget">₹' + fmtDec(sum('budgetCr'), 2) + ' Cr</td>' +
+      '<td class="num wrap" id="totBudgetUsd">$' + fmtDec(sum('budgetUsdMn'), 1) + 'M</td>' +
+      '<td class="num" id="totPlan">' + fmtInt(sum('plan')) + '</td>' +
+      '<td class="num" id="totActive">' + fmtInt(sum('active')) + '</td>' +
+      '<td class="num" id="totInactive">' + fmtInt(sum('inactive')) + '</td>' +
+      '<td class="num wrap colfin" id="totFin">' + fmtInt(sum('fin')) + '</td>' +
+    '</tr>';
+    var tbody = document.getElementById('progressTbody');
+    if (tbody) tbody.innerHTML = rowsHtml + totalHtml;
+    rebuildSelectOptions('fundingFilter', distinctSorted(rows.map(function (r) { return r.fundingSource; })), 'All funding sources');
+    rebuildSelectOptions('progPtypeFilter', distinctSorted(rows.map(function (r) { return r.projectType; })), 'All project types');
+    rebuildSelectOptions('itypeFilter', distinctSorted(rows.map(function (r) { return r.interventionType; })), 'All intervention types');
+    var sel = document.getElementById('fundingFilter');
+    if (sel) sel.dispatchEvent(new Event('change'));
+  }
+
+  var DEAL_FLOW_STAGES = ['Proposal Submitted', 'In-Principle Approval', 'Finance Approval', 'MoU Signed'];
+
+  function renderDealsData(data) {
+    var rows = data.rows || [];
+    var html = rows.map(function (d) {
+      var reached = -1;
+      (d.flags || []).forEach(function (f, i) { if (f) reached = i; });
+      var flowHtml = DEAL_FLOW_STAGES.map(function (s, i) {
+        var done = i <= reached;
+        var step = '<div class="flow-step ' + (done ? 'flow-done' : 'flow-pending') + '">' +
+          '<div class="flow-dot">' + (done ? '&#10003;' : (i + 1)) + '</div>' +
+          '<div class="flow-label">' + escapeHtml(s) + '</div></div>';
+        if (i < DEAL_FLOW_STAGES.length - 1) {
+          step += '<div class="flow-line ' + (i < reached ? 'flow-line-done' : 'flow-line-pending') + '"></div>';
+        }
+        return step;
+      }).join('');
+      return '<div class="deal-card">' +
+        '<div class="deal-head"><h3>' + escapeHtml(d.name) + '</h3><span class="badge badge-state">' + escapeHtml(d.state) + '</span></div>' +
+        '<div class="deal-meta">' +
+          '<span><strong>Targeted:</strong> ' + fmtInt(d.targeted) + ' HHs</span>' +
+          '<span><strong>Budget:</strong> ₹' + fmtDec(d.budgetCr, 2) + ' Cr ($' + fmtDec(d.budgetUsdMn, 1) + 'M)</span>' +
+          '<span><strong>Model:</strong> ' + escapeHtml(d.model) + '</span>' +
+        '</div>' +
+        '<div class="flow-track">' + flowHtml + '</div>' +
+        '<p class="deal-remarks"><strong>Update:</strong> ' + escapeHtml(d.remarks) + '</p>' +
+      '</div>';
+    }).join('');
+    var container = document.getElementById('dealsCardsContainer');
+    if (container) container.innerHTML = html;
+  }
+
+  function renderResearchData(data) {
+    var rows = data.rows || [];
+    var html = rows.map(function (r) {
+      var reportCell = r.report
+        ? '<a class="report-link" href="' + escapeHtml(r.report) + '" target="_blank" rel="noopener">See Report</a>'
+        : '<span class="report-none">—</span>';
+      return '<tr data-ptype="' + slugJs(r.projectType) + '" data-stype="' + slugJs(r.studyType) + '" data-exec="' + slugJs(r.execution) + '">' +
+        '<td class="num">' + r.sl + '</td>' +
+        '<td class="proj-name wrap">' + escapeHtml(r.title) +
+          (r.update ? '<div class="proj-tags">' + escapeHtml(r.update) + '</div>' : '') +
+        '</td>' +
+        '<td>' + escapeHtml(r.projectType) + '</td>' +
+        '<td class="center">' + escapeHtml(r.studyType) + '</td>' +
+        '<td class="wrap-sm center">' + escapeHtml(r.partner) + '</td>' +
+        '<td>' + escapeHtml(r.execution) + '</td>' +
+        '<td>' + reportCell + '</td>' +
+      '</tr>';
+    }).join('');
+    var tbody = document.getElementById('researchTbody');
+    if (tbody) tbody.innerHTML = html;
+    rebuildSelectOptions('rePtypeFilter', distinctSorted(rows.map(function (r) { return r.projectType; })), 'All project types');
+    rebuildSelectOptions('reStypeFilter', distinctSorted(rows.map(function (r) { return r.studyType; })), 'All study types');
+    rebuildSelectOptions('reExecFilter', distinctSorted(rows.map(function (r) { return r.execution; })), 'All execution statuses');
+    var sel = document.getElementById('rePtypeFilter');
+    if (sel) sel.dispatchEvent(new Event('change'));
+  }
+
+  function renderEcosystemData(data) {
+    var partnerships = data.partnerships || [];
+    var convenings = data.convenings || [];
+    var pHtml = partnerships.map(function (p) {
+      return '<tr data-ptype="' + slugJs(p.ptype) + '" data-status="' + slugJs(p.status) + '">' +
+        '<td class="num">' + p.sl + '</td><td>' + escapeHtml(p.partner) + '</td><td>' + escapeHtml(p.project) + '</td>' +
+        '<td class="center">' + escapeHtml(p.ptype) + '</td><td class="wrap">' + escapeHtml(p.focus) + '</td>' +
+        '<td class="center">' + escapeHtml(p.status) + '</td></tr>';
+    }).join('');
+    var pTbody = document.getElementById('partnershipsTbody');
+    if (pTbody) pTbody.innerHTML = pHtml;
+    rebuildSelectOptions('partnerTypeFilter', distinctSorted(partnerships.map(function (p) { return p.ptype; })), 'All partnership types');
+    rebuildSelectOptions('partnerStatusFilter', distinctSorted(partnerships.map(function (p) { return p.status; })), 'All statuses');
+
+    var cHtml = convenings.map(function (c) {
+      return '<tr data-month="' + slugJs(c.month) + '" data-status="' + slugJs(c.status) + '">' +
+        '<td class="num">' + c.sl + '</td><td class="center">' + escapeHtml(c.month) + '</td>' +
+        '<td class="center">' + escapeHtml(c.location) + '</td><td class="wrap">' + escapeHtml(c.topic) + '</td>' +
+        '<td class="wrap">' + escapeHtml(c.attendees) + '</td><td class="center">' + escapeHtml(c.status) + '</td></tr>';
+    }).join('');
+    var cTbody = document.getElementById('conveningsTbody');
+    if (cTbody) cTbody.innerHTML = cHtml;
+    rebuildSelectOptions('conveningMonthFilter', distinctSorted(convenings.map(function (c) { return c.month; })), 'All months');
+    rebuildSelectOptions('conveningStatusFilter', distinctSorted(convenings.map(function (c) { return c.status; })), 'All statuses');
+
+    var sel1 = document.getElementById('partnerTypeFilter');
+    if (sel1) sel1.dispatchEvent(new Event('change'));
+    var sel2 = document.getElementById('conveningMonthFilter');
+    if (sel2) sel2.dispatchEvent(new Event('change'));
+  }
+
+  var REPORT_RENDERERS = { progress: renderProgressData, deals: renderDealsData, research: renderResearchData, ecosystem: renderEcosystemData };
+
+  function refreshPanel(panelKey, btnEl, statusEl) {
+    var origText = btnEl.textContent;
+    btnEl.disabled = true;
+    statusEl.classList.remove('is-error');
+    statusEl.textContent = 'Refreshing…';
+
+    function onSuccess(data) {
+      btnEl.disabled = false;
+      btnEl.textContent = origText;
+      if (!data || data.success === false) {
+        statusEl.classList.add('is-error');
+        statusEl.textContent = 'Error: ' + ((data && data.error) || 'unknown');
+        return;
+      }
+      try {
+        REPORT_RENDERERS[panelKey](data);
+        statusEl.classList.remove('is-error');
+        statusEl.textContent = 'Updated ' + new Date().toLocaleTimeString();
+      } catch (e) {
+        statusEl.classList.add('is-error');
+        statusEl.textContent = 'Error rendering data: ' + e;
+      }
+    }
+    function onError(err) {
+      btnEl.disabled = false;
+      btnEl.textContent = origText;
+      statusEl.classList.add('is-error');
+      statusEl.textContent = 'Error: ' + err;
+    }
+
+    apiCall('/api/get-report-data?which=' + encodeURIComponent(panelKey), 'GET')
+      .then(onSuccess)
+      .catch(function (e) { onError(String(e)); });
+  }
+
+  document.addEventListener('click', function (ev) {
+    var btn = ev.target.closest && ev.target.closest('.refresh-btn');
+    if (!btn) return;
+    var panelKey = btn.dataset.panel;
+    var statusEl = btn.parentElement && btn.parentElement.querySelector('.refresh-status[data-panel="' + panelKey + '"]');
+    if (!statusEl || !REPORT_RENDERERS[panelKey]) return;
+    refreshPanel(panelKey, btn, statusEl);
   });
 </script>
 <div id="feedback-modal-overlay" class="modal-overlay" style="display:none;">
