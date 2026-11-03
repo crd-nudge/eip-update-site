@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>The/Nudge · EIP Stakeholder Portal</title>
+<title>The/Nudge · Economic Inclusion Program (EIP)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -16,11 +16,11 @@
 }
 :root,[data-theme="light"]{
   --bg:#f6f1ef;--surface:#fff;--surface2:#f1e9e6;--border:#e3d7d2;--text:#2b1b16;--muted:#7d6a63;
-  --accent:#693D30;--accent-ink:#fff;--side:#fff;--map-empty:#e8dfdb;--map-stroke:#fff;--shadow:0 1px 3px rgba(60,30,20,.08),0 6px 20px rgba(60,30,20,.06);
+  --accent:#693D30;--accent-ink:#fff;--side:#fff;--map-empty:#e8dfdb;--map-stroke:#fff;--shadow:0 1px 3px rgba(60,30,20,.08),0 6px 20px rgba(60,30,20,.06);--pipe:#b9b1ad;
 }
 [data-theme="dark"]{
   --bg:#17100d;--surface:#241915;--surface2:#2e211c;--border:#3b2c26;--text:#f4ece8;--muted:#b9a59d;
-  --accent:#D4A496;--accent-ink:#2b1710;--side:#1d1411;--map-empty:#33251f;--map-stroke:#17100d;--shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+  --accent:#D4A496;--accent-ink:#2b1710;--side:#1d1411;--map-empty:#33251f;--map-stroke:#17100d;--shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);--pipe:#857a75;
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
@@ -31,6 +31,8 @@ button{font:inherit;cursor:pointer}
 input,select,textarea{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 11px;width:100%}
 input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 textarea{resize:vertical;min-height:80px}
+select{appearance:none;-webkit-appearance:none;padding-right:30px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;background-size:12px}
+input[type=checkbox]{accent-color:var(--accent)}
 label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:0 0 5px}
 .hidden{display:none!important}
 .muted{color:var(--muted)}
@@ -63,9 +65,9 @@ label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:0 0
 /* app shell */
 #app{display:flex;min-height:100%}
 .sidebar{width:var(--sw);flex:none;background:var(--side);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
-.brand{padding:20px 20px 14px;display:flex;align-items:center;gap:10px}
-.brand img{height:30px}
-.brand span{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}
+.brand{padding:22px 20px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.brand img{height:30px;max-width:100%}
+.brand span{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.05em;text-transform:uppercase;line-height:1.3}
 .nav{padding:6px 12px 20px;flex:1}
 .nav h4{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:18px 10px 6px}
 .nav a{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;color:var(--text);text-decoration:none;font-weight:500;font-size:13.5px;cursor:pointer}
@@ -113,19 +115,25 @@ label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:0 0
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
 .card h3{font-size:15px;margin-bottom:12px}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
-.bar-row{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;margin:7px 0;font-size:12.5px}
+.bar-row{display:grid;grid-template-columns:minmax(100px,190px) minmax(60px,1fr) 150px;gap:10px;align-items:center;margin:8px 0;font-size:12.5px}
+.bar-row>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bar{height:10px;background:var(--surface2);border-radius:6px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--accent);border-radius:6px}
-.bar-row span:last-child{text-align:right;color:var(--muted)}
+.bar-row span:last-child{text-align:right;color:var(--muted);white-space:nowrap}
+
 
 /* tables */
-.tablewrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:72vh;box-shadow:var(--shadow)}
+.tablewrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:auto;max-height:calc(100vh - 150px);box-shadow:var(--shadow)}
+.tablewrap.fc td:first-child,.tablewrap.fc th:first-child{position:sticky;left:0;background:var(--surface);z-index:1;box-shadow:1px 0 0 var(--border)}
+.tablewrap.fc thead th:first-child{background:var(--surface2);z-index:3}
+.tablewrap.fc tr.total td:first-child{background:var(--surface2)}
 table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px}
 th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
 thead th{position:sticky;top:0;background:var(--surface2);z-index:2;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);white-space:nowrap}
 tbody tr:hover td{background:var(--surface2)}
 td.c,th.c{text-align:center}
-td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+td.n,th.n{text-align:center;font-variant-numeric:tabular-nums}
+td.nw{white-space:nowrap}
 tr.total td{font-weight:700;background:var(--surface2);position:sticky;bottom:0}
 .w-wrap{white-space:normal;min-width:220px;max-width:380px}
 .chip{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11.5px;font-weight:600;background:var(--surface2);border:1px solid var(--border);white-space:nowrap}
@@ -158,8 +166,7 @@ tr.total td{font-weight:700;background:var(--surface2);position:sticky;bottom:0}
 #indiaMap path{fill:var(--map-empty);stroke:var(--map-stroke);stroke-width:.8;transition:fill .15s;cursor:default}
 #indiaMap path.has{fill:var(--accent);cursor:pointer}
 #indiaMap path.has:hover,#indiaMap path.pinned{filter:brightness(1.18);stroke:var(--text);stroke-width:1.6}
-#indiaMap path.only-p{fill:color-mix(in srgb,var(--info) 55%,var(--map-empty))}
-#indiaMap path.only-d{fill:color-mix(in srgb,var(--warn) 55%,var(--map-empty))}
+#indiaMap path.only-d{fill:var(--pipe)}
 #indiaMap .mk{pointer-events:none}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:8px 8px 2px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
@@ -244,6 +251,78 @@ tr.total td{font-weight:700;background:var(--surface2);position:sticky;bottom:0}
   tr{break-inside:avoid}
   :root,[data-theme]{--bg:#fff;--surface:#fff;--surface2:#f3eeec;--border:#d8ccc7;--text:#000;--muted:#555;--accent:#693D30;--accent-ink:#fff}
 }
+
+/* stage gate */
+.gate{display:flex;margin:16px 0 4px}
+.gstep{flex:1;position:relative;text-align:center;font-size:11px;color:var(--muted);padding:0 3px}
+.gstep .dot{width:26px;height:26px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;background:var(--surface2);border:2px solid var(--border);position:relative;z-index:1}
+.gstep::before{content:"";position:absolute;top:12px;left:-50%;width:100%;height:3px;background:var(--border)}
+.gstep:first-child::before{display:none}
+.gstep.done .dot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.gstep.done::before{background:var(--accent)}
+.gstep.cur .dot{border-color:var(--accent);color:var(--accent);background:var(--surface)}
+.gstep.done,.gstep.cur{color:var(--text);font-weight:600}
+.gstep .gl{display:block;line-height:1.25}
+.pill-stage{font-size:11.5px;font-weight:600}
+/* trend chart */
+.trend svg{width:100%;height:auto;display:block}
+.trend .ax{stroke:var(--border);stroke-width:1}
+.trend text{fill:var(--muted);font-size:11px}
+.sec-title{font-size:16px;margin:26px 0 12px}
+.btn.link-btn{text-decoration:none}
+details.upd{margin-top:5px;font-size:12px}
+details.upd summary{cursor:pointer;color:var(--accent);font-weight:600}
+details.upd div{margin-top:4px;color:var(--muted);white-space:normal}
+.study-sub{display:block;color:var(--muted);font-size:11.5px;font-weight:400;margin-top:2px}
+.printhead{display:none}
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .printhead{display:flex;align-items:center;gap:16px;border-bottom:2px solid #693D30;padding-bottom:10px;margin-bottom:14px}
+  .printhead img{height:30px}
+  .printhead b{font-size:18px;color:#693D30}
+  .printhead span{margin-left:auto;color:#555;font-size:12px}
+  #indiaMap{max-height:none}
+  .detail{position:static;max-height:none}
+  .map-layout{grid-template-columns:1fr 1fr}
+}
+
+/* overview sections */
+.sec{margin:34px 0 14px;padding-top:18px;border-top:2px solid var(--border)}
+.sec:first-of-type{margin-top:6px;border-top:0;padding-top:0}
+.sec h3{font-size:17px}
+.sec p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px;align-items:start}
+.cardhead{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}
+.cardhead h3{margin:0}
+.sortsel{width:auto;max-width:100%;padding:5px 28px 5px 10px;font-size:12px}
+.grp{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin:14px 0 2px;border-bottom:1px solid var(--border);padding-bottom:3px}
+.plrow{display:grid;grid-template-columns:1fr auto auto 150px;gap:4px 16px;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
+.plrow:last-of-type{border-bottom:0}
+.plnum{text-align:right;white-space:nowrap}
+.plnum b{display:block}
+.plstage{text-align:right}
+.study-sub{display:block;color:var(--muted);font-size:11.5px;font-weight:400}
+/* trend chart */
+.trend .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.tchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:16px;padding:5px 12px;font-size:12px;font-weight:600}
+.tchip i{width:10px;height:10px;border-radius:50%;background:var(--c);opacity:.35}
+.tchip.on{color:var(--text);border-color:var(--c);background:var(--surface2)}
+.tchip.on i{opacity:1}
+.trend .fyl{stroke-dasharray:3 4}
+.trend .fyt{font-weight:700;fill:var(--text)}
+.trend .note{font-size:10.5px}
+.trend .endl{font-size:12px}
+
+.tsvg{position:relative}
+.tsvg svg{display:block;width:100%;height:auto}
+.hvl{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+.ttip{position:absolute;z-index:5;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);padding:9px 12px;font-size:12px;min-width:220px}
+.ttip b:first-child{display:block;font-size:12.5px;margin-bottom:5px}
+.ttip div{display:grid;grid-template-columns:10px 1fr auto 62px;gap:8px;align-items:center;padding:2px 0}
+.ttip i{width:9px;height:9px;border-radius:50%}
+.ttip small{color:var(--muted);text-align:right}
+.ttip em{display:block;color:var(--muted);font-style:normal;font-size:10.5px;margin-top:5px}
+@media(max-width:700px){.bar-row{grid-template-columns:100px 1fr 120px}.plrow{grid-template-columns:1fr auto auto}.plstage{grid-column:1/-1;text-align:left}}
 
 </style>
 </head>
@@ -357,7 +436,7 @@ function showLogin(notice) {
   $('#app').classList.add('hidden');
   const L = $('#login'); L.classList.remove('hidden');
   L.innerHTML = '<div class="login-card"><img class="logo" alt="The/Nudge" src="' + logoSrc() + '">' +
-    '<h1>EIP Stakeholder Portal</h1><p class="sub">Sign in with your email — we will send you a one-time code.</p>' +
+    '<h1>Economic Inclusion Program (EIP)</h1><p class="sub">Sign in with your email — we will send you a one-time code.</p>' +
     '<div id="lmsg">' + (notice ? '<div class="msg">' + esc(notice) + '</div>' : '') + '</div><div id="lbody"></div>' +
     '<div class="login-foot" id="lfoot"></div></div>';
   loginEmailStep();
@@ -414,7 +493,7 @@ function localSignOut(notice) { showLogin(notice); }
 
 // ---------- shell ----------
 const NAV = [
-  { h: 'Overview', items: [['dashboard', 'Dashboard'], ['map', 'India Map']] },
+  { h: 'Overview', items: [['dashboard', 'Overview']] },
   { h: 'Report', items: [['progress', 'Project Progress'], ['deals', 'New Govt. Partnerships'], ['research', 'Research & Evaluation'],
     ['ecosystem', 'Ecosystem Partnerships'], ['product', 'Product Update'], ['field', 'From the Field']] },
 ];
@@ -430,7 +509,7 @@ function buildShell() {
   }).join('');
   const adm = S.user.isAdmin ? '<h4>Admin</h4>' + ADMIN_NAV.map(i => '<a data-p="' + i[0] + '" href="#/' + i[0] + '">' + svg(i[0]) + esc(i[1]) +
     (i[0] === 'requests' ? '<span class="badge hidden" id="reqBadge"></span>' : '') + '</a>').join('') : '';
-  A.innerHTML = '<aside class="sidebar"><div class="brand"><img class="logo" alt="The/Nudge" src="' + logoSrc() + '"><span>EIP<br>Stakeholder Portal</span></div>' +
+  A.innerHTML = '<aside class="sidebar"><div class="brand"><img class="logo" alt="The/Nudge" src="' + logoSrc() + '"><span>Economic Inclusion<br>Program (EIP)</span></div>' +
     '<nav class="nav">' + nav + adm + '</nav><div class="side-foot">Report month: ' + esc(CFG.reportMonth || '') + '</div></aside>' +
     '<div class="main"><header class="topbar"><button class="iconbtn menu-btn" id="menuBtn" aria-label="Menu">' + svg('menu') + '</button>' +
     '<h2 id="pageTitle"></h2><div class="grow"></div>' +
@@ -481,7 +560,7 @@ function feedbackModal() {
 }
 
 // ---------- router ----------
-const TITLES = { dashboard: 'Dashboard', map: 'India Map', progress: 'Project Progress', deals: 'New Govt. Partnerships', research: 'Research & Evaluation',
+const TITLES = { dashboard: 'Overview', progress: 'Project Progress', deals: 'New Govt. Partnerships', research: 'Research & Evaluation',
   ecosystem: 'Ecosystem Partnerships', product: 'Product Update', field: 'From the Field', profile: 'My profile',
   users: 'Users', roles: 'Roles & visibility', requests: 'Access requests' };
 P.titles = TITLES;
@@ -489,6 +568,7 @@ function route() {
   if (!S.user) return;
   document.body.classList.remove('nav-open');
   let id = (location.hash.replace(/^#\//, '') || '').split('?')[0];
+  if (id === 'map') id = 'dashboard';
   const adminIds = ['users', 'roles', 'requests'];
   const allowed = visiblePages();
   if (!id || (id !== 'profile' && adminIds.indexOf(id) === -1 && allowed.indexOf(id) === -1)) id = allowed[0] || 'profile';
@@ -497,9 +577,13 @@ function route() {
   $$('.nav a').forEach(a => a.classList.toggle('active', a.dataset.p === id));
   $('#pageTitle').textContent = TITLES[id] || '';
   const el = $('#content'); el.innerHTML = '';
+  const ph = document.createElement('div'); ph.className = 'printhead';
+  ph.innerHTML = '<img alt="The/Nudge" src="' + CFG.logoBrown + '"><b>' + esc(TITLES[id] || '') + '</b><span>Economic Inclusion Program (EIP) · ' + esc(CFG.reportMonth || '') + '</span>';
+  el.appendChild(ph);
   window.scrollTo(0, 0);
   const fn = id === 'profile' ? renderProfile : adminIds.indexOf(id) !== -1 ? P.admin[id] : P.pages[id];
-  if (fn) fn(el); else el.innerHTML = '<div class="empty">Nothing here yet.</div>';
+  const pageBox = document.createElement('div'); el.appendChild(pageBox);
+  if (fn) fn(pageBox); else pageBox.innerHTML = '<div class="empty">Nothing here yet.</div>';
 }
 
 async function startApp() {
@@ -669,7 +753,8 @@ P.admin.requests = async function (el) {
 
 // ---------- boot ----------
 async function boot() {
-  if (window.__PRESET__) { const x = window.__PRESET__; lsSet('eip_token', x.token); if (x.hash) location.hash = x.hash; if (x.theme) { lsSet('eip_theme', x.theme); applyTheme(); } }
+  if (window.__PRESET__) { const x = window.__PRESET__; lsSet('eip_token', x.token); if (x.hash) location.hash = x.hash; if (x.theme) { lsSet('eip_theme', x.theme); applyTheme(); } 
+    if (x.scroll) setTimeout(() => { const t = document.querySelector(x.scroll); if (t) t.scrollIntoView(); }, 1800); }
   const tok = lsGet('eip_token');
   if (!tok) return showLogin();
   S.token = tok;
@@ -750,13 +835,24 @@ async function footnote(foot, body, id) {
 }
 
 // ----- table builder -----
-function table(cols, rows, totals) {
-  return '<div class="tablewrap"><table><thead><tr>' + cols.map(c => '<th class="' + (c.cls || '') + '">' + esc(c.h) + '</th>').join('') + '</tr></thead><tbody>' +
+function table(cols, rows, totals, opts) {
+  opts = opts || {};
+  return '<div class="tablewrap' + (opts.fc ? ' fc' : '') + '"><table><thead><tr>' + cols.map(c => '<th class="' + (c.cls || '') + '">' + esc(c.h) + '</th>').join('') + '</tr></thead><tbody>' +
     (rows.length ? rows.map(r => '<tr>' + cols.map(c => '<td class="' + (c.cls || '') + (c.wrap ? ' w-wrap' : '') + '">' + c.f(r) + '</td>').join('') + '</tr>').join('') :
       '<tr><td colspan="' + cols.length + '" class="empty">No rows match these filters.</td></tr>') +
     (totals && rows.length ? '<tr class="total">' + cols.map((c, i) => '<td class="' + (c.cls || '') + '">' + (totals[i] == null ? '' : totals[i]) + '</td>').join('') + '</tr>' : '') +
     '</tbody></table></div>';
 }
+const STAGES = ['Proposal Submitted / Project Review', 'In-Principle Approval', 'Finance Approval', 'MoU Signed'];
+const STAGE_SHORT = ['Proposal / review', 'In-principle approval', 'Finance approval', 'MoU signed'];
+function curStage(flags) { let n = 0; (flags || []).forEach((f, i) => { if (f) n = i + 1; }); return n; }   // stages completed
+// Stage-gate stepper: filled = done, ringed = in progress, grey = upcoming
+function gate(flags, compact) {
+  const done = curStage(flags);
+  return '<div class="gate">' + STAGE_SHORT.map((l, i) => '<div class="gstep ' + (i < done ? 'done' : i === done ? 'cur' : '') + '"><span class="dot">' + (i < done ? '✓' : (i + 1)) + '</span>' +
+    (compact ? '' : '<span class="gl">' + esc(l) + '</span>') + '</div>').join('') + '</div>' + (compact ? '<div class="muted" style="font-size:11.5px">' + (done >= 4 ? 'Complete — ' : done ? 'Stage ' + done + ' of 4 done — ' : 'Not started — ') + esc(done >= 4 ? STAGE_SHORT[3] : STAGE_SHORT[done] + ' next') + '</div>' : '');
+}
+P.gate = gate;
 
 // ======================= PROGRESS =======================
 P.pages.progress = async function (el) {
@@ -772,9 +868,9 @@ P.pages.progress = async function (el) {
     function draw() {
       const v = flt.apply(rows); flt.count(v.length, rows.length);
       const cols = [
-        { h: 'Project', f: x => '<b>' + esc(x.name) + '</b>', wrap: true }, { h: 'Funding source', f: x => dash(x.fundingSource), wrap: true },
+        { h: 'Project', f: x => '<b>' + esc(x.name) + '</b>', wrap: true }, { h: 'Funding source', f: x => dash(x.fundingSource), wrap: true, cls: 'c' },
         { h: 'Project type', f: x => dash(x.projectType), cls: 'c' }, { h: 'Intervention', f: x => dash(x.interventionType), cls: 'c' },
-        { h: 'Timeline', f: x => esc(x.timeline), cls: 'c' },
+        { h: 'Timeline', f: x => esc(x.timeline), cls: 'c nw' },
         { h: 'Budget (₹ Cr)', f: x => fmt(Math.round(x.budgetCr * 100) / 100), cls: 'n' }, { h: 'Budget ($ Mn)', f: x => (x.budgetUsdMn || 0).toFixed(1), cls: 'n' },
         { h: 'HHs in plan', f: x => fmt(x.plan), cls: 'n' }, { h: 'Active HHs', f: x => fmt(x.active), cls: 'n' },
         { h: 'Inactive', f: x => fmt(x.inactive), cls: 'n' }, { h: 'Received support', f: x => fmt(x.fin), cls: 'n' }];
@@ -782,7 +878,7 @@ P.pages.progress = async function (el) {
       f.body.innerHTML = '<div class="kpis"><div class="kpi"><div class="l">Projects</div><div class="v">' + v.length + '</div></div>' +
         '<div class="kpi"><div class="l">HHs in plan</div><div class="v">' + fmt(sum(v, 'plan')) + '</div></div>' +
         '<div class="kpi"><div class="l">Active HHs</div><div class="v">' + fmt(sum(v, 'active')) + '</div></div>' +
-        '<div class="kpi"><div class="l">Approved budget</div><div class="v">$' + sum(v, 'budgetUsdMn').toFixed(1) + ' Mn</div><div class="s">₹' + fmt(Math.round(sum(v, 'budgetCr'))) + ' Cr</div></div></div>' + table(cols, v, tot);
+        '<div class="kpi"><div class="l">Approved budget</div><div class="v">$' + sum(v, 'budgetUsdMn').toFixed(1) + ' Mn</div><div class="s">₹' + fmt(Math.round(sum(v, 'budgetCr'))) + ' Cr</div></div></div>' + table(cols, v, tot, { fc: true });
     }
     draw();
   }
@@ -791,9 +887,8 @@ P.pages.progress = async function (el) {
 };
 
 // ======================= DEALS =======================
-const STAGES = ['Proposal Submitted / Project Review', 'In-Principle Approval', 'Finance Approval', 'MoU Signed'];
 P.pages.deals = async function (el) {
-  const f = frame(el, 'deals', { sub: 'Pipeline of new government partnerships, by approval stage.', refresh: true });
+  const f = frame(el, 'deals', { sub: 'Pipeline of new government partnerships, shown against the four approval gates.', refresh: true });
   async function run(force) {
     P.loading(f.body);
     const r = await getData('deals', force); if (!r.success) return P.errBox(f.body, r.error);
@@ -807,7 +902,7 @@ P.pages.deals = async function (el) {
         '<div class="kpi"><div class="l">Budget</div><div class="v">$' + sum(v, 'budgetUsdMn').toFixed(1) + ' Mn</div><div class="s">₹' + fmt(Math.round(sum(v, 'budgetCr'))) + ' Cr</div></div></div>' +
         '<div class="deal-grid">' + (v.length ? v.map(d => '<div class="card deal"><h3>' + esc(d.name) + '</h3><span class="muted">' + esc(d.state) + ' · ' + esc(d.model) + '</span>' +
           '<div class="meta"><div><small>HHs targeted</small><b>' + fmt(d.targeted) + '</b></div><div><small>Budget</small><b>$' + (d.budgetUsdMn || 0).toFixed(1) + ' Mn</b><span class="muted">₹' + fmt(Math.round(d.budgetCr)) + ' Cr</span></div></div>' +
-          '<div class="stages">' + STAGES.map((s, i) => '<span class="stage' + (d.flags && d.flags[i] ? ' done' : '') + '">' + esc(s) + '</span>').join('') + '</div>' +
+          '<small class="muted" style="text-transform:uppercase;letter-spacing:.05em;font-size:11px">Stage gate</small>' + gate(d.flags, false) +
           (d.remarks ? '<p>' + esc(d.remarks) + '</p>' : '') + '</div>').join('') : '<div class="empty">No deals match.</div>') + '</div>';
     }
     draw();
@@ -817,6 +912,11 @@ P.pages.deals = async function (el) {
 };
 
 // ======================= RESEARCH =======================
+function reportCell(v) {
+  const urls = String(v || '').match(/https?:\/\/[^\s,;]+/g);
+  if (!urls) return v ? '<span class="muted">' + esc(v) + '</span>' : '–';
+  return urls.map((u, i) => '<a class="btn sm link-btn" target="_blank" rel="noopener noreferrer" href="' + esc(u) + '">' + (urls.length > 1 ? 'Report ' + (i + 1) : 'View report') + '</a>').join(' ');
+}
 P.pages.research = async function (el) {
   const f = frame(el, 'research', { sub: 'Studies in concept, in execution and livelihood research.', refresh: true });
   async function run(force) {
@@ -829,10 +929,11 @@ P.pages.research = async function (el) {
     function draw() {
       const v = flt.apply(rows); flt.count(v.length, rows.length);
       f.body.innerHTML = table([
-        { h: '#', f: (x, i) => esc(x.sl), cls: 'c' }, { h: 'Study title', f: x => '<b>' + esc(x.title) + '</b>', wrap: true },
-        { h: 'Project type', f: x => dash(x.projectType), wrap: true }, { h: 'Type of study', f: x => dash(x.studyType), cls: 'c', wrap: true },
-        { h: 'Partner', f: x => dash(x.partner), cls: 'c', wrap: true }, { h: 'Status', f: x => statusChip(x.execution), cls: 'c' },
-        { h: 'Report', f: x => dash(x.report), cls: 'c' }, { h: 'Latest update', f: x => dash(x.update), wrap: true }], v);
+        { h: '#', f: x => esc(x.sl), cls: 'c' },
+        { h: 'Study', f: x => '<b>' + esc(x.title) + '</b>' + (x.projectType ? '<span class="study-sub">' + esc(x.projectType) + '</span>' : '') +
+          (x.update ? '<details class="upd"><summary>Latest update</summary><div>' + esc(x.update) + '</div></details>' : ''), wrap: true },
+        { h: 'Type of study', f: x => dash(x.studyType), cls: 'c', wrap: true }, { h: 'Partner', f: x => dash(x.partner), cls: 'c', wrap: true },
+        { h: 'Status', f: x => statusChip(x.execution), cls: 'c' }, { h: 'Report', f: x => reportCell(x.report), cls: 'c' }], v, null, { fc: false });
     }
     draw();
   }
@@ -900,57 +1001,190 @@ P.pages.field = async function (el) {
   finish(el, f, 'field');
 };
 
-// ======================= DASHBOARD =======================
+// ======================= OVERVIEW =======================
+const TREND_COLORS = { 'approved': '#c0674d', 'policy approval': '#8a8f98', 'budget allocation': '#a98f6a', 'team in place along with changemakers': '#7e9a8a',
+  'selected': '#8a6bb8', 'consumption grant': '#d09a3c', '1st livelihood grant': '#4f8fa8', '2nd livelihood grant': '#a3705f', 'graduated': '#5aa16f' };
+const TREND_DEFAULT = ['approved', 'selected', 'consumption grant', '1st livelihood grant'];
+const TREND_LABEL = { 'team in place along with changemakers': 'Team in place' };
+const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
+const tlabel = n => TREND_LABEL[n.toLowerCase()] || cap(n);
+const tcolor = (n, i) => TREND_COLORS[n.toLowerCase()] || ['#c0674d', '#8a6bb8', '#d09a3c', '#4f8fa8', '#5aa16f'][i % 5];
+
+function niceMax(v) {
+  const p = Math.pow(10, Math.floor(Math.log10(v))); const m = v / p;
+  return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p;
+}
+function trendChart(host, tr) {
+  const cum = tr.series.map(s => { let a = 0; return { name: s.name, d: s.values, vals: s.values.map(v => (a += v)) }; });
+  const on = {}; cum.forEach(s => { on[s.name] = TREND_DEFAULT.indexOf(s.name.toLowerCase()) !== -1; });
+  const nAll = tr.quarters.length, fy = q => (q.match(/FY'?(\d+)/) || [])[1], qn = q => (q.match(/Q(\d)/) || [])[1];
+  // start one quarter before the first activity so lines rise from zero instead of crawling along the axis
+  let first = 0; for (let i = 0; i < nAll; i++) { if (cum.some(s => s.vals[i] !== 0)) { first = Math.max(0, i - 1); break; } }
+  const Q = tr.quarters.slice(first), n = Q.length;
+  host.style.position = 'relative';
+  host.innerHTML = '<div class="chips" id="tchips">' + cum.map((s, i) => '<button type="button" class="tchip' + (on[s.name] ? ' on' : '') + '" data-s="' + esc(s.name) + '" style="--c:' + tcolor(s.name, i) + '"><i></i>' + esc(tlabel(s.name)) + '</button>').join('') + '</div>' +
+    '<div class="tsvg"><svg role="img" aria-label="Cumulative households by stage, by quarter"></svg><div class="ttip" hidden></div></div>' +
+    '<div class="muted" style="font-size:11.5px;margin-top:4px">Cumulative households that have reached each stage. Hover the chart to read each quarter; click a stage above to show or hide it. Dips reflect corrections in the tracker.</div>';
+  const svgEl = $('svg', host), tip = $('.ttip', host);
+  let geo = null;
+  function draw() {
+    const W = Math.max(480, $('.tsvg', host).clientWidth || 900), H = 300, L = 54, R = W < 700 ? 20 : 150, T = 14, B = 44;
+    const act = cum.filter(s => on[s.name]);
+    const max = Math.max.apply(null, act.map(s => Math.max.apply(null, s.vals.slice(first))).concat([1]));
+    const top = niceMax(max), ticks = 4, pad = 10;
+    const x = i => L + pad + (W - L - R - pad) * (n === 1 ? 0.5 : i / (n - 1)), y = v => T + (H - T - B) * (1 - v / top);
+    geo = { W: W, H: H, x: x, y: y, T: T, B: B };
+    svgEl.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svgEl.setAttribute('width', W); svgEl.setAttribute('height', H);
+    let g = '';
+    for (let k = 0; k <= ticks; k++) { const v = top * k / ticks; g += '<line class="ax" x1="' + L + '" x2="' + (W - R) + '" y1="' + y(v) + '" y2="' + y(v) + '"/><text x="' + (L - 8) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + (v >= 1000 ? (v / 1000) + 'k' : v) + '</text>'; }
+    Q.forEach((q, i) => {
+      if (qn(q) === '1' || i === 0) {
+        g += '<line class="ax fyl" x1="' + x(i) + '" x2="' + x(i) + '" y1="' + T + '" y2="' + (H - B + 6) + '"/>';
+        g += '<text x="' + (x(i) + 4) + '" y="' + (H - B + 20) + '" class="fyt">' + (qn(q) === '1' ? 'FY' + fy(q) : 'Q' + qn(q) + ' FY' + fy(q)) + '</text>';
+      }
+    });
+    const ends = act.map(s => ({ s: s, y: y(s.vals[nAll - 1]) })).sort((a, b) => a.y - b.y);
+    for (let k = 1; k < ends.length; k++) if (ends[k].y - ends[k - 1].y < 14) ends[k].y = ends[k - 1].y + 14;
+    cum.forEach((s, si) => {
+      if (!on[s.name]) return; const c = tcolor(s.name, si);
+      g += '<polyline fill="none" stroke="' + c + '" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" points="' + s.vals.slice(first).map((v, i) => x(i) + ',' + y(v)).join(' ') + '"/>';
+      g += '<circle cx="' + x(n - 1) + '" cy="' + y(s.vals[nAll - 1]) + '" r="3.5" fill="' + c + '"/>';
+    });
+    if (R > 100) ends.forEach(e => {
+      const c = tcolor(e.s.name, cum.indexOf(e.s));
+      g += '<text x="' + (W - R + 10) + '" y="' + (e.y + 4) + '" class="endl" fill="' + c + '"><tspan font-weight="700">' + fmt(e.s.vals[nAll - 1]) + '</tspan> ' + esc(tlabel(e.s.name)) + '</text>';
+    });
+    g += '<g id="hv"></g>';
+    svgEl.innerHTML = g;
+    tip.hidden = true;
+  }
+  function hover(ev) {
+    if (!geo) return;
+    const r = svgEl.getBoundingClientRect(), px = (ev.clientX - r.left) * (geo.W / r.width);
+    let idx = 0, best = 1e9;
+    for (let i = 0; i < n; i++) { const d = Math.abs(geo.x(i) - px); if (d < best) { best = d; idx = i; } }
+    const gi = idx + first, act = cum.filter(s => on[s.name]);
+    let h = '<line class="hvl" x1="' + geo.x(idx) + '" x2="' + geo.x(idx) + '" y1="' + geo.T + '" y2="' + (geo.H - geo.B) + '"/>';
+    act.forEach(s => { h += '<circle cx="' + geo.x(idx) + '" cy="' + geo.y(s.vals[gi]) + '" r="4.5" fill="' + tcolor(s.name, cum.indexOf(s)) + '" stroke="var(--surface)" stroke-width="2"/>'; });
+    $('#hv', svgEl).innerHTML = h;
+    tip.hidden = false;
+    tip.innerHTML = '<b>' + esc(Q[idx]) + '</b>' + act.map(s => {
+      const d = s.d[gi];
+      return '<div><i style="background:' + tcolor(s.name, cum.indexOf(s)) + '"></i><span>' + esc(tlabel(s.name)) + '</span><b>' + fmt(s.vals[gi]) + '</b>' + (d ? '<small>' + (d > 0 ? '+' : '') + fmt(d) + '</small>' : '<small></small>') + '</div>';
+    }).join('') + '<em>Cumulative HHs · change this quarter</em>';
+    const tw = tip.offsetWidth, wrap = $('.tsvg', host).clientWidth, left = geo.x(idx) * (r.width / geo.W);
+    tip.style.left = Math.max(0, Math.min(wrap - tw, left + 14 + tw > wrap ? left - tw - 14 : left + 14)) + 'px';
+    tip.style.top = '8px';
+  }
+  svgEl.addEventListener('mousemove', hover);
+  svgEl.addEventListener('mouseleave', () => { tip.hidden = true; const hv = $('#hv', svgEl); if (hv) hv.innerHTML = ''; });
+  $$('.tchip', host).forEach(b => b.onclick = () => { on[b.dataset.s] = !on[b.dataset.s]; b.classList.toggle('on', on[b.dataset.s]); draw(); });
+  let lastW = 0; window.addEventListener('resize', () => { const w = $('.tsvg', host) && $('.tsvg', host).clientWidth; if (w && w !== lastW) { lastW = w; draw(); } });
+  draw();
+}
+
+const SORTS = {
+  enrol: [['plan', 'Households in plan (largest first)'], ['pct', 'Completion % (highest first)'], ['gap', 'Needs attention (lowest first)'], ['name', 'Project name A–Z'], ['fund', 'Group by funding source']],
+  pipe: [['stage', 'Stage reached (furthest first)'], ['hhs', 'Households targeted'], ['budget', 'Budget'], ['name', 'Name A–Z']],
+};
+const pctOf = x => x.plan ? Math.min(100, Math.round(100 * x.active / x.plan)) : 0;
+function sortEnrol(rows, k) {
+  const r = rows.slice(), started = r.filter(x => x.plan > 0), none = r.filter(x => !x.plan);
+  const cmp = { plan: (a, b) => b.plan - a.plan, pct: (a, b) => pctOf(b) - pctOf(a) || b.plan - a.plan, gap: (a, b) => pctOf(a) - pctOf(b) || b.plan - a.plan,
+    name: (a, b) => a.name.localeCompare(b.name), fund: (a, b) => (a.fundingSource || '').localeCompare(b.fundingSource || '') || b.plan - a.plan }[k] || (() => 0);
+  return started.sort(cmp).concat(none.sort((a, b) => a.name.localeCompare(b.name)));
+}
+function sortPipe(rows, k) {
+  return rows.slice().sort({ stage: (a, b) => curStage(b.flags) - curStage(a.flags) || b.targeted - a.targeted, hhs: (a, b) => b.targeted - a.targeted,
+    budget: (a, b) => b.budgetCr - a.budgetCr, name: (a, b) => a.name.localeCompare(b.name) }[k]);
+}
+const selOpts = (list, cur) => list.map(o => '<option value="' + o[0] + '"' + (o[0] === cur ? ' selected' : '') + '>' + esc(o[1]) + '</option>').join('');
+const secHead = (t, sub) => '<div class="sec"><h3>' + esc(t) + '</h3>' + (sub ? '<p>' + esc(sub) + '</p>' : '') + '</div>';
+
 P.pages.dashboard = async function (el) {
-  el.innerHTML = '<div id="dk"></div>';
-  P.loading($('#dk', el));
-  const want = ['progress', 'deals', 'research', 'ecosystem'].filter(can);
-  const res = {};
-  await Promise.all(want.map(async k => { res[k] = await getData(k, false); }));
-  const ok = k => res[k] && res[k].success;
-  const kp = [], cards = [];
-  if (ok('progress')) {
-    const rows = res.progress.rows;
-    kp.push(['Projects', rows.length, 'ongoing'], ['Households in plan', fmt(sum(rows, 'plan')), fmt(sum(rows, 'active')) + ' active'],
-      ['Approved budget', '$' + sum(rows, 'budgetUsdMn').toFixed(1) + ' Mn', '₹' + fmt(Math.round(sum(rows, 'budgetCr'))) + ' Cr']);
-    const mx = Math.max.apply(null, rows.map(x => x.plan).concat([1]));
-    cards.push('<div class="card"><h3>Households by project</h3>' + rows.slice().sort((a, b) => b.plan - a.plan).map(x => '<div class="bar-row"><span title="' + esc(x.name) + '" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(x.name) + '</span><div class="bar"><i style="width:' + Math.round(100 * x.plan / mx) + '%"></i></div><span>' + fmt(x.active) + ' / ' + fmt(x.plan) + '</span></div>').join('') + '<div class="muted" style="font-size:11.5px;margin-top:8px">Active / planned households</div></div>');
+  el.innerHTML = '<div class="page-head"><div class="grow"></div><span class="updated" id="upd"></span>' +
+    (S.user.perms.refresh ? '<button class="btn sm" id="rfBtn">' + P.icon('refresh').replace('<svg', '<svg width="14" height="14" style="stroke:currentColor;fill:none;stroke-width:2"') + 'Refresh</button>' : '') + '</div>' +
+    secHead('Current status', 'Where the program stands today, from the live trackers.') + '<div id="okpi"></div>' +
+    secHead('Where we work', 'Filter by funding source, project type or intervention; hover a state for details.') + '<div id="omap"></div>' +
+    secHead('Projects and pipeline') + '<div id="ocharts"></div>' +
+    secHead('Trend over time', 'How households have moved through each stage, quarter by quarter.') + '<div id="otrend"></div><div id="ofoot"></div>';
+  let mapCtl = null, enrolSort = 'plan', pipeSort = 'stage', res = {};
+  function drawCards() {
+    const cards = [];
+    const ok = k => res[k] && res[k].success;
+    if (ok('progress')) {
+      const rows = sortEnrol(res.progress.rows, enrolSort);
+      cards.push('<div class="card"><div class="cardhead"><h3>Household enrolment by project</h3><select class="sortsel" data-k="enrol" aria-label="Sort projects">' + selOpts(SORTS.enrol, enrolSort) + '</select></div>' + rows.map((x, i) => {
+        const pct = pctOf(x), prev = rows[i - 1];
+        const grp = enrolSort === 'fund' && (!prev || prev.fundingSource !== x.fundingSource) ? '<div class="grp">' + esc(x.fundingSource || 'Other') + '</div>' : '';
+        const note = !x.plan ? '<span class="muted">Not started</span>' : fmt(x.active) + ' / ' + fmt(x.plan) + ' · ' + pct + '%' + (pct >= 100 ? ' ✓' : '');
+        return grp + '<div class="bar-row"><span title="' + esc(x.name) + '">' + esc(x.name) + '</span><div class="bar"><i style="width:' + pct + '%"></i></div><span>' + note + '</span></div>';
+      }).join('') + '<div class="muted" style="font-size:11.5px;margin-top:8px">Active households as a share of households in plan.</div></div>');
+    }
+    if (ok('deals')) {
+      const rows = sortPipe(res.deals.rows, pipeSort);
+      cards.push('<div class="card"><div class="cardhead"><h3>Pipeline overview</h3><select class="sortsel" data-k="pipe" aria-label="Sort deals">' + selOpts(SORTS.pipe, pipeSort) + '</select></div>' + rows.map(x => {
+        const d = curStage(x.flags);
+        return '<div class="plrow"><div><b>' + esc(x.name) + '</b><span class="study-sub">' + esc(x.state || '') + '</span></div><div class="plnum"><b>' + fmt(x.targeted) + '</b><span class="study-sub">HHs</span></div>' +
+          '<div class="plnum"><b>$' + (x.budgetUsdMn || 0).toFixed(1) + ' Mn</b><span class="study-sub">budget</span></div><div class="plstage">' +
+          (d ? '<span class="chip ' + (d >= 4 ? 'ok' : 'info') + '">' + esc(STAGE_SHORT[d - 1]) + '</span>' : '<span class="chip warn">Not started</span>') + '</div></div>';
+      }).join('') + '<p style="margin:10px 0 0"><a href="#/deals">Open stage gates →</a></p></div>');
+    }
+    $('#ocharts', el).innerHTML = cards.length ? '<div class="grid3">' + cards.join('') + '</div>' : '';
+    $$('.sortsel', el).forEach(s => s.onchange = () => { if (s.dataset.k === 'enrol') enrolSort = s.value; else pipeSort = s.value; drawCards(); });
   }
-  if (ok('deals')) {
-    const rows = res.deals.rows;
-    kp.push(['Govt. deals in pipeline', rows.length, fmt(sum(rows, 'targeted')) + ' HHs targeted']);
-    const counts = STAGES.map((s, i) => rows.filter(d => d.flags && d.flags[i]).length), mx = Math.max.apply(null, counts.concat([1]));
-    cards.push('<div class="card"><h3>Deals by stage reached</h3>' + STAGES.map((s, i) => '<div class="bar-row"><span>' + esc(s) + '</span><div class="bar"><i style="width:' + Math.round(100 * counts[i] / mx) + '%"></i></div><span>' + counts[i] + '</span></div>').join('') + '</div>');
+  async function run(force) {
+    P.loading($('#okpi', el));
+    const want = ['progress', 'deals', 'research', 'ecosystem'].filter(can);
+    res = {};
+    const trP = P.api('getTrendData');
+    await Promise.all(want.map(async k => { res[k] = await getData(k, force); }));
+    const tr = await trP;
+    const ok = k => res[k] && res[k].success;
+    const lastCum = name => { const s = tr.success && tr.series.find(x => x.name.toLowerCase() === name); return s ? s.values.reduce((a, b) => a + b, 0) : null; };
+    const kp = [];
+    if (ok('progress')) {
+      const rows = res.progress.rows;
+      kp.push(['Projects', rows.length, 'ongoing'], ['HHs approved (in plan)', fmt(sum(rows, 'plan')), 'across all projects']);
+    }
+    if (lastCum('selected') != null) kp.push(['HHs selected', fmt(lastCum('selected')), 'program-wide, cumulative']);
+    if (ok('progress')) {
+      const rows = res.progress.rows;
+      kp.push(['HHs active', fmt(sum(rows, 'active')), fmt(sum(rows, 'inactive')) + ' inactive'], ['Received financial support', fmt(sum(rows, 'fin')), 'households · current']);
+    }
+    if (lastCum('consumption grant') != null) kp.push(['Consumption grant', fmt(lastCum('consumption grant')), 'HHs, cumulative']);
+    if (lastCum('1st livelihood grant') != null) kp.push(['1st livelihood grant', fmt(lastCum('1st livelihood grant')), 'HHs, cumulative']);
+    if (lastCum('graduated') != null) kp.push(['Graduated', fmt(lastCum('graduated')), 'HHs, cumulative']);
+    if (ok('progress')) kp.push(['Approved budget', '$' + sum(res.progress.rows, 'budgetUsdMn').toFixed(1) + ' Mn', '₹' + fmt(Math.round(sum(res.progress.rows, 'budgetCr'))) + ' Cr']);
+    if (ok('deals')) kp.push(['Govt. deals in pipeline', res.deals.rows.length, fmt(sum(res.deals.rows, 'targeted')) + ' HHs targeted · $' + sum(res.deals.rows, 'budgetUsdMn').toFixed(1) + ' Mn']);
+    if (ok('research')) kp.push(['Studies', res.research.rows.length, 'concept, in execution, livelihood']);
+    const errs = want.filter(k => !ok(k));
+    $('#okpi', el).innerHTML = (kp.length ? '<div class="kpis">' + kp.map(k => '<div class="kpi"><div class="l">' + esc(k[0]) + '</div><div class="v">' + k[1] + '</div><div class="s">' + esc(k[2]) + '</div></div>').join('') + '</div>' : '') +
+      (errs.length ? '<div class="msg err">Some figures could not be loaded: ' + esc(errs.map(k => (res[k] && res[k].error) || k).join('; ')) + '</div>' : '') +
+      (!tr.success ? '<div class="msg err">Stage trend could not be loaded: ' + esc(tr.error || '') + '</div>' : '');
+    $('#upd', el).textContent = ok('progress') && res.progress.fetchedAt ? 'Live from tracker · ' + P.fmtDT(res.progress.fetchedAt) : '';
+    if (!mapCtl) mapCtl = P.mountMap($('#omap', el)); mapCtl.reload(force);
+    drawCards();
+    const tb = $('#otrend', el);
+    if (tr.success) { tb.innerHTML = '<div class="card trend"><div id="tchart"></div></div>'; trendChart($('#tchart', tb), tr); } else tb.innerHTML = '';
   }
-  if (ok('research')) {
-    const rows = res.research.rows, by = {};
-    rows.forEach(x => { const k = x.execution || 'Unspecified'; by[k] = (by[k] || 0) + 1; });
-    kp.push(['Studies', rows.length, Object.keys(by).length + ' statuses']);
-    const keys = Object.keys(by).sort((a, b) => by[b] - by[a]), mx = Math.max.apply(null, Object.values(by).concat([1]));
-    cards.push('<div class="card"><h3>Research by status</h3>' + keys.map(k => '<div class="bar-row"><span>' + esc(k) + '</span><div class="bar"><i style="width:' + Math.round(100 * by[k] / mx) + '%"></i></div><span>' + by[k] + '</span></div>').join('') + '</div>');
-  }
-  if (ok('ecosystem')) {
-    const ps = res.ecosystem.partnerships, cs = res.ecosystem.convenings;
-    kp.push(['Partnerships', ps.length, cs.length + ' convenings']);
-  }
-  const errs = want.filter(k => !ok(k));
-  $('#dk', el).innerHTML = (kp.length ? '<div class="kpis">' + kp.map(k => '<div class="kpi"><div class="l">' + esc(k[0]) + '</div><div class="v">' + k[1] + '</div><div class="s">' + esc(k[2]) + '</div></div>').join('') + '</div>' : '') +
-    (cards.length ? '<div class="grid2">' + cards.join('') + '</div>' : '') +
-    (errs.length ? '<div class="msg err">Some figures could not be loaded: ' + esc(errs.map(k => (res[k] && res[k].error) || k).join('; ')) + '</div>' : '') +
-    (can('map') ? '<div class="card"><h3>Where we work</h3><p class="muted" style="margin-top:0">See every project, partnership and pipeline deal on the India map.</p><a class="btn primary" href="#/map">Open the map</a></div>' : '');
+  const rf = $('#rfBtn', el); if (rf) rf.onclick = () => run(true);
+  await run(false);
+  P.mountComments($('#ofoot', el), 'dashboard');
 };
 
 P.getData = getData; P.mountFilters = mountFilters; P.uniq = uniq; P.sum = sum; P.statusChip = statusChip; P.okImg = okImg; P.STAGES = STAGES; P.can = can; P.frame = frame; P.finish = finish;
 })();
 
-/* ===== India map page ===== */
+/* ===== India map (embedded in the Overview page) ===== */
 (function () {
 'use strict';
 const P = window.PORTAL, S = P.S, $ = P.$, $$ = P.$$, esc = P.esc, fmt = P.fmt;
 const MAP = P.CFG.map;
 const ALIAS = [['new delhi', 'dl'], ['ncr', 'dl'], ['orissa', 'or'], ['pondicherry', 'py'], ['uttaranchal', 'ut'], ['j&k', 'jk'], ['andaman', 'an'], ['nicobar', 'an'], ['lakshadweep', 'ld']];
-const matchers = MAP.states.map(s => [s.id, new RegExp('(^|[^a-z])' + s.name.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ and /g, ' (?:and|&) ') + '(?![a-z])')])
-  .concat(ALIAS.map(a => [a[1], new RegExp('(^|[^a-z])' + a[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![a-z])')]));
+const rx = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const matchers = MAP.states.map(s => [s.id, new RegExp('(^|[^a-z])' + rx(s.name.toLowerCase()).replace(/ and /g, ' (?:and|&) ') + '(?![a-z])')])
+  .concat(ALIAS.map(a => [a[1], new RegExp('(^|[^a-z])' + rx(a[0]) + '(?![a-z])')]));
 function statesIn(text) {
   const t = String(text || '').toLowerCase(), out = [];
   matchers.forEach(m => { if (m[1].test(t) && out.indexOf(m[0]) === -1) out.push(m[0]); });
@@ -959,28 +1193,25 @@ function statesIn(text) {
 P.statesIn = statesIn;
 const NAME = {}; MAP.states.forEach(s => { NAME[s.id] = s.name; });
 
-P.pages.map = async function (el) {
-  const f = P.frame(el, 'map', { sub: 'Hover a highlighted state for details; click to pin it.', refresh: true });
-  f.body.innerHTML = '<div id="mfilters"></div><div class="map-layout"><div class="card map-card"><svg id="indiaMap" viewBox="' + esc(MAP.viewBox) + '" role="img" aria-label="Map of India"></svg>' +
+P.mountMap = function (el) {
+  el.innerHTML = '<div id="mfilters"></div><div class="map-layout"><div class="card map-card"><svg id="indiaMap" viewBox="' + esc(MAP.viewBox) + '" role="img" aria-label="Map of India"></svg>' +
     '<div class="legend" id="mlegend"></div><div class="attrib">Map: India state boundaries, © svg-maps (CC BY 4.0). Illustrative; not an authority on boundaries.</div></div>' +
     '<div class="card detail" id="mdetail"></div></div><div class="muted" id="munmapped" style="font-size:12px;margin-top:8px"></div>';
-  f.fbar.remove();
   const tip = document.createElement('div'); tip.className = 'tip'; document.body.appendChild(tip);
-  P.mapTip = tip; // cleaned on route via MutationObserver below
-
-  let proj = [], partners = [], deals = [], convs = [];
-  let layers = { p: true, a: true, d: true, c: true }, pinned = null, hovered = null, flt = null;
+  let proj = [], partners = [], deals = [];
+  const layers = { p: true, d: true };
+  let pinned = null, hovered = null, flt = null, by = {}, vp = [];
   const photoCache = {};
+  const canDeals = P.can('deals');
 
   async function load(force) {
     P.loading($('#mdetail', el), 'Loading map data…');
-    const [mr, dr] = await Promise.all([P.api('getMapData'), P.can('deals') ? P.getData('deals', force) : Promise.resolve(null)]);
+    const [mr, dr] = await Promise.all([P.api('getMapData'), canDeals ? P.getData('deals', force) : Promise.resolve(null)]);
     if (!mr.success) return P.errBox($('#mdetail', el), mr.error);
     const pg = mr.progress || {}, ec = mr.ecosystem || {};
-    S.data.progress = pg.success ? pg : S.data.progress; S.data.ecosystem = ec.success ? ec : S.data.ecosystem;
-    proj = pg.rows || []; partners = ec.partnerships || []; convs = ec.convenings || [];
+    if (pg.success) S.data.progress = pg; if (ec.success) S.data.ecosystem = ec;
+    proj = pg.rows || []; partners = ec.partnerships || [];
     deals = dr && dr.success ? dr.rows : [];
-    f.upd.textContent = pg.fetchedAt ? 'Live from tracker · ' + P.fmtDT(pg.fetchedAt) : '';
     buildFilters(); draw();
   }
 
@@ -990,54 +1221,51 @@ P.pages.map = async function (el) {
     flt = P.mountFilters($('#mflt', host), [
       { key: 'fs', label: 'Funding source', get: x => x.fundingSource }, { key: 'pt', label: 'Project type', get: x => x.projectType },
       { key: 'it', label: 'Intervention type', get: x => x.interventionType }], proj, draw);
-    const lay = document.createElement('div'); lay.className = 'f layers'; lay.style.maxWidth = 'none'; lay.style.flex = '2';
-    lay.innerHTML = '<div><label>Layers</label><div class="layers">' +
-      [['p', 'Projects'], ['a', 'Partnerships'], ['d', 'Pipeline deals'], ['c', 'Convenings']].map(l => '<label><input type="checkbox" data-l="' + l[0] + '"' + (layers[l[0]] ? ' checked' : '') + '>' + l[1] + '</label>').join('') + '</div></div>';
-    flt && $('#mflt', host).insertBefore(lay, $('#fcount', host));
+    const lay = document.createElement('div'); lay.className = 'f'; lay.style.maxWidth = 'none';
+    lay.innerHTML = '<label>Show on map</label><div class="layers"><label><input type="checkbox" data-l="p" checked>Projects</label>' +
+      (canDeals ? '<label><input type="checkbox" data-l="d" checked>Pipeline deals</label>' : '') + '</div>';
+    $('#mflt', host).insertBefore(lay, $('#fcount', host));
     $$('input[data-l]', lay).forEach(i => i.onchange = () => { layers[i.dataset.l] = i.checked; draw(); });
   }
 
-  // index everything by state, honouring the filters
   function index() {
-    const by = {}; const unm = [];
-    const slot = id => (by[id] = by[id] || { p: [], a: [], d: [], c: [] });
-    const vp = flt ? flt.apply(proj) : proj;
+    const b = {}, unm = [];
+    const slot = id => (b[id] = b[id] || { p: [], a: [], d: [] });
+    vp = flt ? flt.apply(proj) : proj;
     const projStates = {};
     vp.forEach(x => { const ids = statesIn(x.name); ids.forEach(i => { projStates[i] = 1; if (layers.p) slot(i).p.push(x); }); if (!ids.length) unm.push(x.name); });
     const filtered = flt && flt.active();
     const ok = id => !filtered || projStates[id];
-    partners.forEach(x => { const ids = statesIn(x.project + ' ' + x.partner); ids.forEach(i => { if (layers.a && ok(i)) slot(i).a.push(x); }); if (!ids.length && layers.a && !filtered) unm.push(x.partner + ' (partnership)'); });
-    deals.forEach(x => { statesIn(x.state + ' ' + x.name).slice(0, 1).forEach(i => { if (layers.d && ok(i)) slot(i).d.push(x); }); });
-    convs.forEach(x => { statesIn(x.location).forEach(i => { if (layers.c && ok(i)) slot(i).c.push(x); }); });
+    partners.forEach(x => statesIn(x.project + ' ' + x.partner).forEach(i => { if (layers.p && projStates[i]) slot(i).a.push(x); }));
+    deals.forEach(x => statesIn(x.state + ' ' + x.name).slice(0, 1).forEach(i => { if (layers.d && ok(i)) slot(i).d.push(x); }));
     if (flt) flt.count(vp.length, proj.length);
-    return { by: by, unm: unm };
+    return { by: b, unm: unm };
   }
 
   function draw() {
-    const ix = index(); const by = ix.by;
-    P.mapIndex = by;
+    const ix = index(); by = ix.by;
     const svg = $('#indiaMap', el);
     svg.innerHTML = MAP.states.map(s => {
       const b = by[s.id]; let cls = '';
-      if (b) cls = b.p.length ? 'has' : b.a.length ? 'has only-p' : b.d.length ? 'has only-d' : b.c.length ? 'has only-d' : '';
+      if (b) cls = b.p.length ? 'has' : b.d.length ? 'has only-d' : '';
       return '<path id="st-' + s.id + '" data-id="' + s.id + '" class="' + cls + '"' + (cls ? ' tabindex="0" role="button" aria-label="' + esc(s.name) + '"' : '') + ' d="' + s.d + '"></path>';
     }).join('');
-    // markers
     let mk = '';
     try {
       MAP.states.forEach(s => {
-        const b = by[s.id]; if (!b) return;
-        const bb = $('#st-' + s.id, svg).getBBox(); const cx = bb.x + bb.width / 2, cy = bb.y + bb.height / 2;
-        const dots = []; if (b.a.length) dots.push('#6f9bd1'); if (b.d.length) dots.push('#d4a24a'); if (b.c.length) dots.push('#9a7fd1');
-        dots.forEach((c, i) => { mk += '<circle class="mk" cx="' + (cx + (i - (dots.length - 1) / 2) * 9) + '" cy="' + cy + '" r="3.6" fill="' + c + '" stroke="#fff" stroke-width="1"/>'; });
+        const b = by[s.id]; if (!b || !b.d.length || !b.p.length) return;     // marker = a pipeline deal in a project state
+        const bb = $('#st-' + s.id, svg).getBBox();
+        mk += '<circle class="mk" cx="' + (bb.x + bb.width / 2) + '" cy="' + (bb.y + bb.height / 2) + '" r="4" fill="#fff" stroke="#693D30" stroke-width="2"/>';
       });
-    } catch (e) { /* getBBox unavailable (tests) */ }
+    } catch (e) { /* getBBox unavailable in tests */ }
     svg.insertAdjacentHTML('beforeend', '<g>' + mk + '</g>');
-    $('#mlegend', el).innerHTML = '<span><i style="background:var(--accent)"></i>Project state</span><span><i style="background:color-mix(in srgb,var(--info) 55%,var(--map-empty))"></i>Partnership only</span>' +
-      '<span><i style="background:color-mix(in srgb,var(--warn) 55%,var(--map-empty))"></i>Pipeline / convening only</span><span><i style="background:#6f9bd1;border-radius:50%"></i>Partnership</span><span><i style="background:#d4a24a;border-radius:50%"></i>Deal</span><span><i style="background:#9a7fd1;border-radius:50%"></i>Convening</span>';
+    $('#mlegend', el).innerHTML = '<span><i style="background:var(--accent)"></i>States with projects</span>' +
+      (canDeals ? '<span><i style="background:var(--pipe)"></i>Planned — pipeline deal only</span><span><i style="background:#fff;border:2px solid #693D30;border-radius:50%;width:8px;height:8px"></i>Pipeline deal in a project state</span>' : '');
     $('#munmapped', el).textContent = ix.unm.length ? 'Not mapped to a state: ' + ix.unm.join(', ') + '.' : '';
-    bind(svg); showDetail(pinned && by[pinned] ? pinned : null);
-    if (pinned && by[pinned]) $('#st-' + pinned, svg).classList.add('pinned'); else pinned = null;
+    bind(svg);
+    if (pinned && !by[pinned]) pinned = null;
+    if (pinned) $('#st-' + pinned, svg).classList.add('pinned');
+    showDetail(pinned);
   }
 
   function bind(svg) {
@@ -1059,25 +1287,28 @@ P.pages.map = async function (el) {
     pinned = id; p.classList.add('pinned'); showDetail(id);
   }
 
+  const stat = (l, v, s) => '<div class="kpi" style="padding:12px 14px"><div class="l">' + l + '</div><div class="v" style="font-size:22px">' + v + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>';
+
   function showDetail(id) {
     const d = $('#mdetail', el); if (!d) return;
-    const by = P.mapIndex || {};
     if (!id || !by[id]) {
-      const n = Object.keys(by).length;
-      d.innerHTML = '<h3>India</h3><p class="muted">' + n + ' state' + (n === 1 ? '' : 's') + ' with activity for the current filters. Hover a highlighted state to see its projects, partnerships and photos. Click to pin.</p>' +
-        '<div class="kpis" style="grid-template-columns:1fr 1fr;margin:0"><div class="kpi"><div class="l">Projects</div><div class="v">' + Object.values(by).reduce((a, b) => a + b.p.length, 0) + '</div></div>' +
-        '<div class="kpi"><div class="l">Partnerships</div><div class="v">' + Object.values(by).reduce((a, b) => a + b.a.length, 0) + '</div></div></div>';
+      const n = Object.keys(by).filter(k => by[k].p.length).length;
+      const dl = canDeals && layers.d ? deals.filter(x => !flt || !flt.active()) : [];
+      d.innerHTML = '<h3>India — all selected projects</h3><p class="muted" style="margin-top:2px">' + n + ' state' + (n === 1 ? '' : 's') + ' · ' + vp.length + ' project' + (vp.length === 1 ? '' : 's') + '. Hover a state for details; click to pin it.</p>' +
+        '<div class="kpis" style="grid-template-columns:1fr 1fr;margin:0 0 12px">' +
+        stat('HHs in plan', fmt(P.sum(vp, 'plan'))) + stat('HHs active', fmt(P.sum(vp, 'active')), fmt(P.sum(vp, 'inactive')) + ' inactive') +
+        stat('Received financial support', fmt(P.sum(vp, 'fin')), 'households') + stat('Approved budget', '$' + P.sum(vp, 'budgetUsdMn').toFixed(1) + ' Mn', '₹' + fmt(Math.round(P.sum(vp, 'budgetCr'))) + ' Cr') + '</div>' +
+        (dl.length ? '<h4>Pipeline</h4><div class="mini"><b>' + dl.length + ' government deals</b><small>' + fmt(P.sum(dl, 'targeted')) + ' HHs targeted · $' + P.sum(dl, 'budgetUsdMn').toFixed(1) + ' Mn</small></div>' : '');
       return;
     }
     const b = by[id];
     const sec = (title, arr, fn) => arr.length ? '<h4>' + title + ' (' + arr.length + ')</h4>' + arr.map(fn).join('') : '';
     d.innerHTML = '<h3>' + esc(NAME[id]) + (pinned === id ? ' <span class="chip">pinned</span>' : '') + '</h3>' +
+      (b.p.length ? '<div class="kpis" style="grid-template-columns:1fr 1fr;margin:8px 0 0">' + stat('HHs in plan', fmt(P.sum(b.p, 'plan'))) + stat('HHs active', fmt(P.sum(b.p, 'active'))) + '</div>' : '') +
       sec('Projects', b.p, x => '<div class="mini"><b>' + esc(x.name) + '</b><small>' + esc(x.projectType || '') + ' · ' + esc(x.interventionType || '') + ' · ' + esc(x.fundingSource || '') + '</small>' +
         '<div class="kv"><span>' + esc(x.timeline || '') + '</span><span>HHs <b>' + fmt(x.active) + '</b> / ' + fmt(x.plan) + '</span><span>$<b>' + (x.budgetUsdMn || 0).toFixed(1) + '</b> Mn</span></div></div>') +
       sec('Partnerships', b.a, x => '<div class="mini"><b>' + esc(x.partner) + '</b><small>' + esc(x.ptype || '') + ' · ' + esc(x.project || '') + '</small><div style="margin-top:4px;font-size:12.5px">' + esc(x.focus || '') + '</div><div style="margin-top:6px">' + P.statusChip(x.status) + '</div></div>') +
-      sec('Pipeline deals', b.d, x => '<div class="mini"><b>' + esc(x.name) + '</b><small>' + esc(x.model || '') + '</small><div class="kv"><span>HHs <b>' + fmt(x.targeted) + '</b></span><span>$<b>' + (x.budgetUsdMn || 0).toFixed(1) + '</b> Mn</span></div>' +
-        '<div class="stages">' + P.STAGES.map((s, i) => '<span class="stage' + (x.flags && x.flags[i] ? ' done' : '') + '">' + esc(s) + '</span>').join('') + '</div></div>') +
-      sec('Convenings', b.c, x => '<div class="mini"><b>' + esc(x.topic) + '</b><small>' + esc(x.month || '') + ' · ' + esc(x.location || '') + '</small></div>') +
+      sec('Pipeline deals', b.d, x => '<div class="mini"><b>' + esc(x.name) + '</b><small>' + esc(x.model || '') + '</small><div class="kv"><span>HHs <b>' + fmt(x.targeted) + '</b></span><span>$<b>' + (x.budgetUsdMn || 0).toFixed(1) + '</b> Mn</span></div>' + P.gate(x.flags, true) + '</div>') +
       '<h4>Photos</h4><div id="dph" class="muted">Loading photos…</div>';
     loadPhotos(id);
   }
@@ -1094,11 +1325,9 @@ P.pages.map = async function (el) {
     $$('img', host).forEach((im, n) => { im.src = items[n].src; im.title = (items[n].project || '') + ' — ' + (items[n].caption || ''); im.onclick = () => P.lightbox(items[n].src); });
   }
 
-  if (f.rf) f.rf.onclick = () => load(true);
-  const obs = new MutationObserver(() => { if (!document.body.contains($('#indiaMap'))) { tip.remove(); obs.disconnect(); } });
+  const obs = new MutationObserver(() => { if (!document.body.contains(el)) { tip.remove(); obs.disconnect(); } });
   obs.observe($('#content'), { childList: true });
-  await load(false);
-  P.finish(el, f, 'map');
+  return { reload: load };
 };
 })();
 
